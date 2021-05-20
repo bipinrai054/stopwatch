@@ -5,9 +5,12 @@ import DisplayComponent from './components/DisplayComponent';
 
 function App() {
   const [time, setTime] = useState({ ms: 0, s: 0, m: 0, h: 0 });
+  const [interv, setInterv] = useState();
+  const [status, setStatus] = useState(0);
 
   const start = () => {
-    setInterval(run, 10);
+    setStatus(1);
+    setInterv(setInterval(run, 10));
   };
 
   var updatedMs = time.ms,
@@ -32,12 +35,31 @@ function App() {
     return setTime({ ms: updatedMs, s: updatedS, m: updatedM, h: updatedH });
   };
 
+  const stop = () => {
+    clearInterval(interv);
+    setStatus(2);
+  };
+
+  const reset = () => {
+    clearInterval(interv);
+    setStatus(0);
+    setTime({ ms: 0, s: 0, m: 0, h: 0 });
+  };
+
+  const resume = () => start();
+
   return (
     <div className='main-section'>
       <div className='clock-holder'>
         <div className='stopwatch'>
           <DisplayComponent time={time} />
-          <BtnComponent start={start} />
+          <BtnComponent
+            reset={reset}
+            stop={stop}
+            status={status}
+            start={start}
+            resume={resume}
+          />
         </div>
       </div>
     </div>
