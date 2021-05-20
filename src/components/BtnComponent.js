@@ -1,9 +1,11 @@
 import React from 'react';
 
-function BtnComponent() {
+function BtnComponent({ start }) {
   return (
     <div>
-      <button className='stopwatch-btn stopwatch-btn-gre'>Start</button>
+      <button onClick={start} className='stopwatch-btn stopwatch-btn-gre'>
+        Start
+      </button>
     </div>
   );
 }
